@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# File installed with puppet.
+
+if [ -r <%= @logfile %> ] ; then
+  /usr/bin/webalizer -Q
+fi
+
