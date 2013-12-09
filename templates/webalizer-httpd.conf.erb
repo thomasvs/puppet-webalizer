@@ -1,0 +1,14 @@
+# Installed puppet.
+#
+#
+
+Alias /usage /var/www/usage
+
+<Directory /var/www/usage>
+  AllowOverride None
+  Order allow,deny
+  Allow <%= @allow %>
+</Directory>
+
+
+
