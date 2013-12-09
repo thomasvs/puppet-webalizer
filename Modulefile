@@ -1,5 +1,5 @@
-name    'cernops-webalizer'
-version '0.1.0'
+name    'CERNOps-webalizer'
+version '0.1.1'
 source 'http://github.com/cernops/puppet-webalizer'
 author 'cernops'
 license 'Apache License, Version 2.0'
