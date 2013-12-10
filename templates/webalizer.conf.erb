@@ -412,26 +412,26 @@ HideUser <%= u %>
 #GroupURL	/cgi-bin/*	CGI Scripts
 #GroupURL	/images/*	Images
 <% @groupurl.each do |u| -%>
-GroupURL <%- u %>
+GroupURL <%= u %>
 <% end -%>
 
 #GroupSite	*.aol.com
 #GroupSite	*.compuserve.com
 <% @groupsite.each do |s| -%>
-GroupSite <%- s %>
+GroupSite <%= s %>
 <% end -%>
 
 
 #GroupReferrer	yahoo.com/	Yahoo!
 #GroupReferrer	excite.com/     Excite
 <% @groupreferrer.each do |r| -%>
-GroupReferrer <%- r %>
+GroupReferrer <%= r %>
 <% end -%>
 
 #GroupUser      root            Admin users
 #GroupUser      admin           Admin users
 <% @groupuser.each do |u| -%>
-GroupUser <%- u %>
+GroupUser <%= u %>
 <% end -%>
 
 # The following is a great way to get an overall total
