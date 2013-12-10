@@ -26,7 +26,7 @@ class webalizer::params {
   $dnschildren = '10'
   $htmlpre = ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">']
   $htmlhead = ['<META NAME="author" CONTENT="The Webalizer">']
-  $htmlbody = 'HTMLBody <BODY BGCOLOR="#E8E8E8" TEXT="#000000" LINK="#0000FF" VLINK="#FF0000">'
+  $htmlbody = '<HTMLBody <BODY BGCOLOR="#E8E8E8" TEXT="#000000" LINK="#0000FF" VLINK="#FF0000">'
   $htmlpost = ['<BR CLEAR="all">']
   $htmltail = '<IMG SRC="msfree.png" ALT="100% Micro$oft free!">'
   $htmlend  = '</BODY></HTML>'
