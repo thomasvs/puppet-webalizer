@@ -1,7 +1,11 @@
 #Class: webalizer::config
 #confgures webalizer.conf and cron job using
 #parameters from init (defaults params.pp)
-class webalizer::config inherits webalizer {
+class webalizer::config (
+  $config = $webalizer::params::config,
+  $puppet_apache = $webalizer::params::puppet_apache,
+  $cronfile = $webalizer::params::cronfile
+) inherits webalizer {
 
 
   if $::puppet_apache {
@@ -14,7 +18,7 @@ class webalizer::config inherits webalizer {
     }
   }
 
-  file{'/etc/webalizer.conf':
+  file{$config:
     ensure  => file,
     mode    => '0644',
     owner   => root,
@@ -22,12 +26,14 @@ class webalizer::config inherits webalizer {
     content => template('webalizer/webalizer.conf.erb')
   }
   #Kill the rpm provided cron job.
-  file{'/etc/cron.daily/00webalizer':
-    ensure  => file,
-    mode    => '0755',
-    owner   => root,
-    group   => root,
-    content => template('webalizer/webalizer.cron.erb'),
-    require => Package['webalizer']
+  if $cronfile {
+    file{$cronfile:
+      ensure  => file,
+      mode    => '0755',
+      owner   => root,
+      group   => root,
+      content => template('webalizer/webalizer.cron.erb'),
+      require => Package['webalizer']
+    }
   }
 }

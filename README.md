@@ -6,8 +6,8 @@
 3. Overrights thecron job file provided by the package.
 4. Optionally creates apache configuration to serve webalizer's output.
 
-This has only been tested on rhel/fedora type systems, it should be very
-easy to adapt to debian or others.
+This has only been tested on rhel/fedora type systems, it contains
+a guess at Debian which may or may not work.
 
 ## Examples
 Set up webalizer on an alternative logfile, allow access from all to the

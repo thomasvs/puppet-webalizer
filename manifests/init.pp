@@ -15,6 +15,10 @@
 # [*version*]
 #   Specify a version of the webalizer package to install. Default is *present*
 #
+# [*config*]
+#   Defaults to /etc/webalizer.conf on RedHat family and /etc/webalizer/webalizer.conf
+#   on Debian
+#
 # [*puppet_apache*]
 #   Should the puppet module create a /etc/httpd/conf.d/webalizer.conf, default is
 #   *true*
@@ -45,6 +49,7 @@
 #
 class webalizer (
   $version = $webalizer::params::version,
+  $config  = $webalizer::params::config,
   $puppet_apache = $webalizer::params::puppet_apache,
   $allow = $webalizer::params::allow,
   $logfile = $webalizer::params::logfile,

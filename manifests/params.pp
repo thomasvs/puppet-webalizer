@@ -3,6 +3,18 @@ class webalizer::params {
   # Package version of webalizer.
   $version = present
 
+  # Location of configuration file.
+  $config = $::osfamily {
+    'Debian' => '/etc/webalizer/webalizer.conf',
+    'RedHat' => '/etc/webalizer.conf'
+  }
+
+  # If not false a cron file will be written.
+  $cronfile = $::osfamily {
+    'Debian' => false,
+    'RedHat' => '/etc/cron.daily/00webalizer'
+  }
+
   #Should I create a httpd configuration file.
   $puppet_apache = true
   # Who is permitted to access the URL.
@@ -11,12 +23,24 @@ class webalizer::params {
   #Webalizer configuration. All other variables
   # are just lower cased configurations from
   # man webalizer.conf.
-  $logfile = '/var/log/httpd/access.log'
+  $logfile = $::osfamily {
+    'Debian' => '/var/log/apache2/access.log.1',
+    'RedHat' => '/var/log/httpd/access.log'
+  }
   $logtype = 'clf'
-  $output  = '/var/www/usage'
-  $historyname = '/var/lib/webalizer/webalizer.hist'
+  $output  = $::osfamily {
+    'Debian' => '/var/www/webalizer',
+    'RedHat' => '/var/www/usage'
+  }
+  $historyname = $::osfamily {
+    'Debian' => 'webalizer.hist',
+    'RedHat' => '/var/lib/webalizer/webalizer.hist'
+  }
   $incremental = 'yes'
-  $incrementalname = '/var/lib/webalizer/webalizer.current'
+  $incrementalname = $::osfamily {
+    'Debian' => 'webalizer.current',
+    'RedHat' => '/var/lib/webalizer/webalizer.current'
+  }
   $reporttitle = 'Usage Statistics for'
   $hostname = undef
   $htmlextenstion = html
