@@ -4,13 +4,13 @@ class webalizer::params {
   $version = present
 
   # Location of configuration file.
-  $config = $::osfamily {
+  $config = $::osfamily ? {
     'Debian' => '/etc/webalizer/webalizer.conf',
     'RedHat' => '/etc/webalizer.conf'
   }
 
   # If not false a cron file will be written.
-  $cronfile = $::osfamily {
+  $cronfile = $::osfamily ? {
     'Debian' => false,
     'RedHat' => '/etc/cron.daily/00webalizer'
   }
@@ -23,21 +23,21 @@ class webalizer::params {
   #Webalizer configuration. All other variables
   # are just lower cased configurations from
   # man webalizer.conf.
-  $logfile = $::osfamily {
+  $logfile = $::osfamily ? {
     'Debian' => '/var/log/apache2/access.log.1',
     'RedHat' => '/var/log/httpd/access.log'
   }
   $logtype = 'clf'
-  $output  = $::osfamily {
+  $output  = $::osfamily ? {
     'Debian' => '/var/www/webalizer',
     'RedHat' => '/var/www/usage'
   }
-  $historyname = $::osfamily {
+  $historyname = $::osfamily ? {
     'Debian' => 'webalizer.hist',
     'RedHat' => '/var/lib/webalizer/webalizer.hist'
   }
   $incremental = 'yes'
-  $incrementalname = $::osfamily {
+  $incrementalname = $::osfamily ? {
     'Debian' => 'webalizer.current',
     'RedHat' => '/var/lib/webalizer/webalizer.current'
   }
