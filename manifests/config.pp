@@ -8,7 +8,7 @@ class webalizer::config (
 ) inherits webalizer {
 
 
-  if $::puppet_apache {
+  if $puppet_apache {
     file{'/etc/httpd/conf.d/webalizer.conf':
       ensure  => file,
       owner   => root,
