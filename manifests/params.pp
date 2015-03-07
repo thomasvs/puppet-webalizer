@@ -17,6 +17,11 @@ class webalizer::params {
 
   #Should I create a httpd configuration file.
   $puppet_apache = true
+	# The (virtual) URL for web access
+	$apache_alias = $::osfamily ? {
+		'Debian' => '/webalizer',
+		'RedHat' => '/usage'
+	}
   # Who is permitted to access the URL.
   $allow = 'from 127.0.0.1'
 
@@ -46,7 +51,10 @@ class webalizer::params {
   $htmlextenstion = html
   $pagetype = ['htm*','cgi','php','shtml']
   $usehttps = no
-  $dnscache = '/var/lib/webalizer/dns_cache.db'
+	$dnscache = $::osfamily ? {
+		'Debian' => 'dns_cache.db',
+		'RedHat' => '/var/lib/webalizer/dns_cache.db'
+	}
   $dnschildren = '10'
   $htmlpre = ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">']
   $htmlhead = ['<META NAME="author" CONTENT="The Webalizer">']
@@ -109,4 +117,3 @@ class webalizer::params {
   $searchagents = ['yahoo.com       p=','altavista.com   q=','google.com      q=','eureka.com      q=']
 
 }
-
