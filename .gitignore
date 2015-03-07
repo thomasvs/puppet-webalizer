@@ -1,0 +1,4 @@
+# global git ignores
+*~
+*.swp
+*.pyc
