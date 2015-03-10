@@ -22,6 +22,15 @@ class webalizer::params {
 		'Debian' => '/webalizer',
 		'RedHat' => '/usage'
 	}
+	# apache conf file name
+	$apache_conffile = $::osfamily ? {
+	# on Debian the cron script will treat all *.conf under /etc/webalizer
+	# as webalizer.conf files, so I need a different extension for this.
+	# On the other hand, Debian's standard is to leave the apache snippet within the main conf dir,
+	# then add a symlink to this file wherever required.
+		'Debian' => '/etc/webalizer/apache.config',
+		'RedHat' => '/etc/httpd/conf.d/webalizer.conf',
+	}
   # Who is permitted to access the URL.
   $allow = 'from 127.0.0.1'
 

@@ -5,6 +5,9 @@
 2. Configures /etc/webalizer.conf. 
 3. Overrights thecron job file provided by the package.
 4. Optionally creates apache configuration to serve webalizer's output.
+	NOTE: On Debian systems, the Apache snippet is '/etc/webalizer/apache.config'.
+	It is up to the user to either copy, move or symlink it wherever it makes sense
+	(i.e. under '/etc/apache2/config.d/')
 
 This has only been tested on rhel/fedora type systems, it contains
 a guess at Debian which may or may not work.
