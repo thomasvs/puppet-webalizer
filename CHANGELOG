@@ -1,5 +1,9 @@
+2015-03-10  Jesús M. Navarro <jesus.navarro@undominio.net>
+
+	* RedHat/Debian support added for a few more params.
+	* Apache config file template gets RedHat/Debian support.
+	
 2013-12-12  Steve Traylen  <steve.traylen@cern.ch>
 
     * First guess at debian support.
     * Bugfixes in webalizer.conf.erb template.
-
