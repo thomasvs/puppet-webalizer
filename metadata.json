@@ -1,6 +1,6 @@
 {
   "name": "jmnav-webalizer",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "Jesús M. Navarro",
   "summary": "Configure webalizer",
   "description": "Fork from http://github.com/cernops/puppet-webalizer, since its author seems to be MIA.",
@@ -16,7 +16,7 @@
   "source": "https://github.com/jmnavarrol/puppet-webalizer",
   "project_page": "https://github.com/jmnavarrol/puppet-webalizer",
   "issues_url": "https://github.com/jmnavarrol/puppet-webalizer/issues",
-  "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
-  ]
+	"dependencies": [
+		{ "name": "puppetlabs/stdlib", "version_requirement": ">= 1.0.0" }
+	]
 }
