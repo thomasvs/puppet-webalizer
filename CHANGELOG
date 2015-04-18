@@ -1,3 +1,7 @@
+2015-04-18  Jesús M. Navarro <jesus.navarro@undominio.net>
+
+	* Dependency on puppetlabs/stdlib gets properly defined.
+	
 2015-03-10  Jesús M. Navarro <jesus.navarro@undominio.net>
 
 	* RedHat/Debian support added for a few more params.
