@@ -1,13 +1,13 @@
 # Class: webalizer::params
 class webalizer::params {
-  # Package version of webalizer.
-  $version = present
-
-  # Location of configuration file.
-  $config = $::osfamily ? {
-    'Debian' => '/etc/webalizer/webalizer.conf',
-    'RedHat' => '/etc/webalizer.conf'
-  }
+	# Should this class create a default webalize.conf file?
+	$default_config = true
+	# Location of configuration file.
+	$base_config = $::osfamily ? {
+		'Debian' => '/etc/webalizer',
+		'RedHat' => '/etc'
+	}
+	$config = "${base_config}/webalizer.conf"
 
   # If not false a cron file will be written.
   $cronfile = $::osfamily ? {
@@ -34,13 +34,16 @@ class webalizer::params {
   # Who is permitted to access the URL.
   $allow = 'from 127.0.0.1'
 
-  #Webalizer configuration. All other variables
-  # are just lower cased configurations from
-  # man webalizer.conf.
-  $logfile = $::osfamily ? {
-    'Debian' => '/var/log/apache2/access.log.1',
-    'RedHat' => '/var/log/httpd/access.log'
-  }
+	# Webalizer configuration.
+	# All other variables are just lower cased configurations from man webalizer.conf.
+	$base_log = $::osfamily ? {
+		'Debian' => '/var/log/apache2',
+		'RedHat' => '/var/log/httpd',
+	}
+	$logfile = $::osfamily ? {
+		'Debian' => "$base_log/access.log.1",
+		'RedHat' => "$base_log/access.log"
+	}
   $logtype = 'clf'
   $output  = $::osfamily ? {
     'Debian' => '/var/www/webalizer',

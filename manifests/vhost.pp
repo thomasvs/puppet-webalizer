@@ -1,66 +1,22 @@
-# == Class: webalizer
-#
-# Installs webalizer and configures /etc/webalizer.conf
-#
-# === Parameters
-#
-# Document parameters here.
-#
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-# === Variables
-#
-# [*version*]
-#   Specify a version of the webalizer package to install. Default is *present*
-#
-# [*config*]
-#   Defaults to /etc/webalizer.conf on RedHat family and /etc/webalizer/webalizer.conf
-#   on Debian
-#
-# [*puppet_apache*]
-#   Should the puppet module create a /etc/httpd/conf.d/webalizer.conf, default is
-#   *true*
-#
-# [*allow*]
-#   Specify who is permitted to access the /usage URL, default is from 'from 127.0.0.1' only.
-#   The value ends up in the /etc/httpd/conf.d/webalizer.conf file above.
-#
-# [*logfile*, *logtype*, *historyname*, ...]
-#   There are around 70 configuration options that set values in /etc/webalizer.conf.
-#   These values come direct from the man page for webalizer.conf. Note that some
-#   values are strings where as some are arrays. Check the defaults in params.pp
-# === Examples
-#
-#  class { webalizer:
-#    logfile       => '/var/log/httpd/my_accces.log',
-#    allow         => 'from all',
-#    puppet_apache => true
-#  }
-#
-# === Authors
-#
-# Steve Traylen <steve.traylen@cern.ch>
-#
-# === Copyright
-#
-# Copyright 2013 Steve Traylen, CERN
-#
-class webalizer (
-	$default_config = $webalizer::params::default_config,
-  $version = $webalizer::params::version,
-  $config  = $webalizer::params::config,
-  $puppet_apache = $webalizer::params::puppet_apache,
+# Define ::webalizer::vhost
+# Configures a webalizer conf file aimed to a specific virtual host
+define webalizer::vhost (
+# non-default/customized params go first
+	$site     = $title,
+	$hostname = $title,
+	$config   = "${webalizer::params::base_config}/${title}.conf",
+	$logfile  = "${webalizer::params::base_log}/${title}.access.log",
+	$output   = "${webalizer::params::output}/${title}",
+# then, all the other params
+# 	$default_config = $webalizer::params::default_config,
+#   $puppet_apache = $webalizer::params::puppet_apache,
   $allow = $webalizer::params::allow,
-  $logfile = $webalizer::params::logfile,
   $logtype = $webalizer::params::logtype,
   $historyname = $webalizer::params::historyname,
   $incremental = $webalizer::params::incremental,
   $clf = $webalizer::params::clf,
   $incrementalname = $webalizer::params::incrementalname,
   $reporttitle = $webalizer::params::reporttitle,
-  $hostname = $webalizer::params::hostname,
   $htmlextenstion  = $webalizer::params::htmlextenstion,
   $pagetype  = $webalizer::params::pagetype,
   $usehttps  = $webalizer::params::usehttps,
@@ -125,15 +81,22 @@ class webalizer (
   $ignoreuser  = $webalizer::params::ignoreuser,
   $mangleagents  = $webalizer::params::mangleagents,
   $searchagents = $webalizer::params::searchagents
-
-) inherits webalizer::params {
-
-  validate_string($version)
-  validate_string($allow)
-
-  anchor { 'webalizer::begin': } ->
-  class { '::webalizer::install': } ->
-  class { '::webalizer::config': } ->
-  anchor { 'webalizer::end': }
-
+) {
+# set per-vhost output dir
+	file { $output:
+		ensure  => directory,
+		mode    => '0755',
+		owner   => 'root',
+		group   => 'root',
+		require => Class['webalizer::install'];
+	}
+# vhost-based webalizer conf file
+	file { $config:
+		ensure  => file,
+		mode    => '0644',
+		owner   => root,
+		group   => root,
+		content => template('webalizer/webalizer.conf.erb'),
+		require => Class['webalizer::install'];
+	}
 }

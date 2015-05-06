@@ -16,14 +16,18 @@ class webalizer::config (
 			content => template('webalizer/webalizer-httpd.conf.erb')
 		}
 	}
-
-  file{$config:
-    ensure  => file,
-    mode    => '0644',
-    owner   => root,
-    group   => root,
-    content => template('webalizer/webalizer.conf.erb')
-  }
+	
+	if $default_config {
+		webalizer::vhost { 'default':
+			hostname => "${webalizer::params::hostname}",
+			config   => "${webalizer::params::config}",
+			logfile  => "${webalizer::params::logfile}",
+			output   => "${webalizer::params::output}";
+		}
+	} else {
+		file { "${webalizer::params::config}": ensure => absent }
+	}
+	
   #Kill the rpm provided cron job.
   if $cronfile {
     file{$cronfile:

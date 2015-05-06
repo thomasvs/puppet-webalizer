@@ -1,13 +1,15 @@
-2015-04-18  Jesús M. Navarro <jesus.navarro@undominio.net>
+2015-05-06  Jesús M. Navarro <jesus.navarro@undominio.net>
+	* Module refactoring so multiple webalizer conf files can be defined
+	  (by means of a defined type)
+	* Dropped support for redhat (and derivatives)
 
+2015-04-18  Jesús M. Navarro <jesus.navarro@undominio.net>
 	* Dependency on puppetlabs/stdlib gets properly defined.
 	
 2015-03-10  Jesús M. Navarro <jesus.navarro@undominio.net>
-
 	* RedHat/Debian support added for a few more params.
 	* Apache config file template gets RedHat/Debian support.
 	
 2013-12-12  Steve Traylen  <steve.traylen@cern.ch>
-
     * First guess at debian support.
     * Bugfixes in webalizer.conf.erb template.

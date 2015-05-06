@@ -1,6 +1,4 @@
-#Class: webalizer::install
-class webalizer::install ($version = 'present' ) inherits webalizer {
-  package{'webalizer':
-    ensure => $version
-  }
+# Class: webalizer::install
+class webalizer::install {
+	package { 'webalizer': ensure => present }
 }
