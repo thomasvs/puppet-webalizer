@@ -1,3 +1,10 @@
+2015-05-07  Steve Traylen  <steve.traylen@cern.ch>
+	* DNSCache and DNSChildren options are no longer added
+	  to webalizer.conf file on redhat since the values
+	  are not supported by new webalizers. The old 
+	  behaviour can be restored by explicitly setting
+	  those values.
+
 2015-05-07  Jesús M. Navarro <jesus.navarro@undominio.net>
 	* Added all webalizer config options as webalizer::vhost params.
 	  This way a proper config file is build when webalizer class gets declared.

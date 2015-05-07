@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 # global git ignores
 *~
 *.swp
 *.pyc
+spec/fixtures
+Gemfile.lock
+pkg/
+log/
+.vagrant
+package.box
+

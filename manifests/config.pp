@@ -4,11 +4,12 @@
 class webalizer::config (
   $config = $webalizer::params::config,
   $puppet_apache = $webalizer::params::puppet_apache,
+  $apache_conffile = $webalizer::params::apache_conffile,
   $cronfile = $webalizer::params::cronfile
 ) inherits webalizer {
 
 	if $puppet_apache {
-		file{ $webalizer::params::apache_conffile:
+		file{ $apache_conffile:
 			ensure  => file,
 			owner   => root,
 			group   => root,
