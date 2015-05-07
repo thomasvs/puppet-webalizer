@@ -1,3 +1,7 @@
+2015-05-07  Jesús M. Navarro <jesus.navarro@undominio.net>
+	* Added all webalizer config options as webalizer::vhost params.
+	  This way a proper config file is build when webalizer class gets declared.
+
 2015-05-06  Jesús M. Navarro <jesus.navarro@undominio.net>
 	* Module refactoring so multiple webalizer conf files can be defined
 	  (by means of a defined type)

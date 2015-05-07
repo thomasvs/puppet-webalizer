@@ -1,6 +1,6 @@
 {
 	"name": "jmnav-webalizer",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "Jesús M. Navarro",
 	"summary": "Configure webalizer",
 	"description": "Fork from http://github.com/cernops/puppet-webalizer, since its author seems to be MIA.",
