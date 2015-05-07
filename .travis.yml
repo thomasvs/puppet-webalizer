@@ -1,6 +1,41 @@
-rvm: 1.8.7
+script: bundle exec rake validate && bundle exec rake lint && bundle exec rake spec
+  SPEC_OPTS='--format documentation'
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 1.8.7
+    env: PUPPET_GEM_VERSION="~> 3.0"
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 3.4.0"
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 3.0"
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes"
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 4.0"
+  - rvm: 2.0.0
+    env: PUPPET_GEM_VERSION="~> 3.0"
+  - rvm: 2.0.0
+    env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes"
+  - rvm: 2.0.0
+    env: PUPPET_GEM_VERSION="~> 4.0"
+  - rvm: 2.1.5
+    env: PUPPET_GEM_VERSION="~> 3.0"
+  - rvm: 2.1.5
+    env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes"
+  - rvm: 2.1.5
+    env: PUPPET_GEM_VERSION="~> 4.0"
 notifications:
-env:
-  - PUPPET_VERSION=2.6.14
-  - PUPPET_VERSION=2.7.11
-  - PUPPET_VERSION=3.2.2
+  email: false
+deploy:
+  provider: puppetforge
+  user: CERNOps
+  password:
+    secure: "CY7rpJTh0XLXZz77gUWvZrc19T9VYmYtU4vJZAbNyw6CBTTF40H7NcEjMMKfkoCTGeXhEJriYcGvPeYQ99GtMYvb5OL/S+Yu5BqrOda1Jz2zNAMewl2fvyMZ+1KcrDZKE0oDHP5jEhpOAZ6hn+4i01nJbwhLd52p044AKqRnolo="
+  on:
+    tags: true
+    all_branches: true
+    rvm: 1.9.3
+    condition: $FUTURE_PARSER = yes
+
+
