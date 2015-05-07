@@ -47,8 +47,8 @@ class webalizer::params {
   $htmlextenstion = html
   $pagetype = ['htm*','cgi','php','shtml']
   $usehttps = no
-  $dnscache = '/var/lib/webalizer/dns_cache.db'
-  $dnschildren = '10'
+  $dnscache = undef
+  $dnschildren = undef
   $htmlpre = ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">']
   $htmlhead = ['<META NAME="author" CONTENT="The Webalizer">']
   $htmlbody = '<HTMLBody <BODY BGCOLOR="#E8E8E8" TEXT="#000000" LINK="#0000FF" VLINK="#FF0000">'

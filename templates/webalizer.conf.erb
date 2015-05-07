@@ -120,7 +120,9 @@ UseHTTPS       <%= @usehttps %>
 # relative to the default output directory.  See the DNS.README file for
 # additional information.
 
+<% if @dnscache -%>
 DNSCache	<%= @dnscache %>
+<% end -%>
 
 # DNSChildren allows you to specify how many "children" processes are
 # run to perform DNS lookups to create or update the DNS cache file.
@@ -134,7 +136,9 @@ DNSCache	<%= @dnscache %>
 # normal system operations.  Reasonable values should be between 5 and
 # 20.  See the DNS.README file for additional information.
 
+<% if @dnschildren -%>
 DNSChildren	<%= @dnschildren %>
+<% end -%>
 
 # HTMLPre defines HTML code to insert at the very beginning of the
 # file.  Default is the DOCTYPE line shown below.  Max line length
