@@ -3,7 +3,7 @@
   "license": "Apache License, Version 2.0",
   "source": "http://github.com/cernops/puppet-webalizer",
   "description": "Configure webalizer",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "summary": "Configures webalizer",
   "name": "CERNOps-webalizer",
   "author": "CERNops",
