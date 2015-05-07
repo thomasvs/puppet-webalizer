@@ -6,13 +6,14 @@ class webalizer::params {
   # Location of configuration file.
   $config = $::osfamily ? {
     'Debian' => '/etc/webalizer/webalizer.conf',
-    'RedHat' => '/etc/webalizer.conf'
+    default  => '/etc/webalizer.conf',
+    
   }
 
   # If not false a cron file will be written.
   $cronfile = $::osfamily ? {
     'Debian' => false,
-    'RedHat' => '/etc/cron.daily/00webalizer'
+    default => '/etc/cron.daily/00webalizer'
   }
 
   #Should I create a httpd configuration file.
@@ -25,21 +26,21 @@ class webalizer::params {
   # man webalizer.conf.
   $logfile = $::osfamily ? {
     'Debian' => '/var/log/apache2/access.log.1',
-    'RedHat' => '/var/log/httpd/access.log'
+    default => '/var/log/httpd/access.log'
   }
   $logtype = 'clf'
   $output  = $::osfamily ? {
     'Debian' => '/var/www/webalizer',
-    'RedHat' => '/var/www/usage'
+    default  => '/var/www/usage'
   }
   $historyname = $::osfamily ? {
     'Debian' => 'webalizer.hist',
-    'RedHat' => '/var/lib/webalizer/webalizer.hist'
+    default => '/var/lib/webalizer/webalizer.hist'
   }
   $incremental = 'yes'
   $incrementalname = $::osfamily ? {
     'Debian' => 'webalizer.current',
-    'RedHat' => '/var/lib/webalizer/webalizer.current'
+    default => '/var/lib/webalizer/webalizer.current'
   }
   $reporttitle = 'Usage Statistics for'
   $hostname = undef
