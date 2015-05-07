@@ -28,21 +28,21 @@ It is also my first attempt to publish a puppet module, so please be patient :)
 4. Optionally creates apache configuration to serve webalizer's output.  
 	**NOTE:** See [Limitations: Apache config](#apache-config).
 
-This module has been tested on Debian *wheezy*.
+This module has been tested on Debian *"wheezy"*.
 
 ## Usage
-There are to *"main modes"* of usage, depending if you want to create just one or more than one configuration files (i.e. to produce stats for multiple virtual hosts).
+There are two *"main modes"* of usage, depending if you want to create just one or more than one configuration files (i.e. to produce stats for multiple virtual hosts).
 
-On top of that, both the `webalizer` class and the `webalizer::vhost` defined type basically accept as many params as the webalizer program makes avaliable.
+On top of that, both the `webalizer` class and the `webalizer::vhost` defined type basically accept as many params as the webalizer program makes available.
 
 For default values see `webalizer::params` and either `webalizer` or `webalizer::vhost` respectively.
 
 ### Single configuration file
-If you just need to produce output stats for a single web site, you are better off declaring `webalizer` as a parametrized class and let it produce a single `webalizer.conf`file.
+If you just need to produce output stats for a single web site, you are better off declaring `webalizer` as a parametrized class and let it produce a single `webalizer.conf` file.
 
-The following is an example to set up webalizer to process an alternate log file, an then grant access from all to the apache served ouput:
+The following is an example for setting up webalizer to process an alternate log file, and then grant *access from all* to the publication tree:
 ```puppet
-class{ 'webalizer':
+class { 'webalizer':
 	logfile       => "/var/log/httpd/my_access.log",
 	allow         => 'from all',
 	puppet_apache => true,
@@ -79,11 +79,9 @@ Of course, you still can overwrite all the avaliable params for a finer tuned re
 ## Limitations
 
 ### OS support
-Up to version 0.2.3, this module has been tested on rhel/fedora and debian type systems.
+Up to version 0.2.3, this module has been tested on rhel/fedora and debian systems.
 
-Version 1.0.0 underwent significant changes in order to allow virtual hosts support by means of multiple configuration files.
-
-Since I only use Debian systems nowadays, version 1.0.0 and upwards are tagged to only be Debian compatible.  
+Version 1.0.0 underwent significant changes in order to allow virtual hosts support by means of multiple configuration files.  Therefore, since I only use Debian systems nowadays, version 1.0.0 and upwards are tagged to only be Debian compatible.  
 This doesn't necessarily mean it won't work on redhat derivatives, it's only it hasn't been tested.  In case of problems on redhat derivatives, patches are welcome.
 
 ### Apache config
