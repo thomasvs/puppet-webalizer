@@ -1,3 +1,5 @@
+[![Puppet Forge](http://img.shields.io/puppetforge/v/CERNOps/webalizer.svg)](https://forge.puppetlabs.com/CERNOps/webalizer)
+[![Build Status](https://travis-ci.org/cernops/puppet-webalizer.svg?branch=master)](https://travis-ci.org/cernops/puppet-webalizer)
 #webalizer
 
 ## Overview

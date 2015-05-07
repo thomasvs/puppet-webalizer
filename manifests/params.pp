@@ -6,13 +6,14 @@ class webalizer::params {
   # Location of configuration file.
   $config = $::osfamily ? {
     'Debian' => '/etc/webalizer/webalizer.conf',
-    'RedHat' => '/etc/webalizer.conf'
+    default  => '/etc/webalizer.conf',
+    
   }
 
   # If not false a cron file will be written.
   $cronfile = $::osfamily ? {
     'Debian' => false,
-    'RedHat' => '/etc/cron.daily/00webalizer'
+    default => '/etc/cron.daily/00webalizer'
   }
 
   #Should I create a httpd configuration file.
@@ -39,32 +40,29 @@ class webalizer::params {
   # man webalizer.conf.
   $logfile = $::osfamily ? {
     'Debian' => '/var/log/apache2/access.log.1',
-    'RedHat' => '/var/log/httpd/access.log'
+    default => '/var/log/httpd/access.log'
   }
   $logtype = 'clf'
   $output  = $::osfamily ? {
     'Debian' => '/var/www/webalizer',
-    'RedHat' => '/var/www/usage'
+    default  => '/var/www/usage'
   }
   $historyname = $::osfamily ? {
     'Debian' => 'webalizer.hist',
-    'RedHat' => '/var/lib/webalizer/webalizer.hist'
+    default => '/var/lib/webalizer/webalizer.hist'
   }
   $incremental = 'yes'
   $incrementalname = $::osfamily ? {
     'Debian' => 'webalizer.current',
-    'RedHat' => '/var/lib/webalizer/webalizer.current'
+    default => '/var/lib/webalizer/webalizer.current'
   }
   $reporttitle = 'Usage Statistics for'
   $hostname = undef
   $htmlextenstion = html
   $pagetype = ['htm*','cgi','php','shtml']
   $usehttps = no
-	$dnscache = $::osfamily ? {
-		'Debian' => 'dns_cache.db',
-		'RedHat' => '/var/lib/webalizer/dns_cache.db'
-	}
-  $dnschildren = '10'
+  $dnscache = undef
+  $dnschildren = undef
   $htmlpre = ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">']
   $htmlhead = ['<META NAME="author" CONTENT="The Webalizer">']
   $htmlbody = '<HTMLBody <BODY BGCOLOR="#E8E8E8" TEXT="#000000" LINK="#0000FF" VLINK="#FF0000">'
