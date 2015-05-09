@@ -41,8 +41,8 @@ class webalizer::params {
 		'RedHat' => '/var/log/httpd',
 	}
 	$logfile = $::osfamily ? {
-		'Debian' => "$base_log/access.log.1",
-		'RedHat' => "$base_log/access.log"
+		'Debian' => "${base_log}/access.log.1",
+		'RedHat' => "${base_log}/access.log"
 	}
   $logtype = 'clf'
   $output  = $::osfamily ? {

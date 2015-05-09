@@ -97,7 +97,7 @@ class webalizer::config (
 			mangleagents    => $mangleagents,
 			searchagents    => $webalizer::params::searchagents		}
 	} else {
-		file { "${webalizer::params::config}": ensure => absent }
+		file { $webalizer::params::config: ensure => absent }
 	}
 	
   #Kill the rpm provided cron job.
