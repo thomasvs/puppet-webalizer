@@ -15,11 +15,13 @@
 
 
 ## Overview
-This module allows puppet to manage/configure a webalizer set-up.
+This module allows puppet to manage/configure a webalizer set-up, providing support for multiple virtual hosts.
 
-It is a fork of CERNOps/webalizer by CERN-Ops, since I didn't manage to contact the original author.
+It is a fork of CERNOps/webalizer by CERN-Ops.
 
 It is also my first attempt to publish a puppet module, so please be patient :)
+
+**WARNING:** This module currently under heavy refactoring.  Documentation will be updated afterwards.
 
 ## Description
 1. Installs the webalizer package.

@@ -1,21 +1,17 @@
 {
 	"name": "jmnav-webalizer",
-	"version": "1.0.2",
+	"version": "2.0.0",
 	"author": "Jesús M. Navarro",
 	"summary": "Configure webalizer",
-	"description": "Fork from http://github.com/cernops/puppet-webalizer, since its author seems to be MIA.",
+	"description": "Installs and configures webalizer, with support for multiple virtual hosts.",
 	"tags": ["webalizer"],
-	"operatingsystem_support": [
-		{
-			"operatingsystem": "Debian",
-			"operatingsystemrelease": [ "7" ]
-		}
-	],
+	
+	"requirements": [ { "name": "puppet", "version_requirement": "3.x" } ],
+	"dependencies": [ { "name": "puppetlabs/stdlib", "version_requirement": ">= 1.0.0" } ],
+	"operatingsystem_support": [ { "operatingsystem": "Debian", "operatingsystemrelease": [ "7" ] } ],
+	
 	"license": "Apache-2.0",
 	"source": "https://github.com/jmnavarrol/puppet-webalizer",
 	"project_page": "https://github.com/jmnavarrol/puppet-webalizer",
-	"issues_url": "https://github.com/jmnavarrol/puppet-webalizer/issues",
-	"dependencies": [
-		{ "name": "puppetlabs/stdlib", "version_requirement": ">= 1.0.0" }
-	]
+	"issues_url": "https://github.com/jmnavarrol/puppet-webalizer/issues"
 }

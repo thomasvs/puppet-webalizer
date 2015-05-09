@@ -88,7 +88,7 @@ define webalizer::vhost (
 		mode    => '0755',
 		owner   => 'root',
 		group   => 'root',
-		require => Class['webalizer::install'];
+		require => Class['webalizer'];
 	}
 # vhost-based webalizer conf file
 	file { $config:
@@ -97,6 +97,6 @@ define webalizer::vhost (
 		owner   => root,
 		group   => root,
 		content => template('webalizer/webalizer.conf.erb'),
-		require => Class['webalizer::install'];
+		require => Class['webalizer'];
 	}
 }
