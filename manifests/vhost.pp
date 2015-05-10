@@ -1,15 +1,13 @@
 # Define ::webalizer::vhost
-# Configures a webalizer conf file aimed to a specific virtual host
+# Configures a webalizer's conf file and output directory aimed at a specific virtual host
 define webalizer::vhost (
 # non-default/customized params go first
-	$site     = $title,
 	$hostname = $title,
 	$config   = "${webalizer::params::base_config}/${title}.conf",
 	$logfile  = "${webalizer::params::base_log}/${title}.access.log",
 	$output   = "${webalizer::params::output}/${title}",
+	
 # then, all the other params
-# 	$default_config = $webalizer::params::default_config,
-#   $puppet_apache = $webalizer::params::puppet_apache,
   $allow = $webalizer::params::allow,
   $logtype = $webalizer::params::logtype,
   $historyname = $webalizer::params::historyname,
@@ -82,14 +80,25 @@ define webalizer::vhost (
   $mangleagents  = $webalizer::params::mangleagents,
   $searchagents = $webalizer::params::searchagents
 ) {
-# set per-vhost output dir
-	file { $output:
-		ensure  => directory,
-		mode    => '0755',
-		owner   => 'root',
-		group   => 'root',
-		require => Class['webalizer'];
+# A bit of error checking first:
+# we are either called from our parent class (single config) or from a different class (multiple configs)
+	if $::webalizer::singleconfig {
+		if $caller_module_name != 'webalizer' {
+			fail( "Processing SINGLE config, but you explicitly called the 'webalizer::vhost' defined type.
+			       You should pass parameters to the webalizer class instead!!" )
+		}
+	} else {
+		if caller_module_name == 'webalizer' {
+			fail( "Processing MULTI config but called from webalizer.
+			       Please, call the 'webalizer::vhost' defined type instead!!" )
+		} elsif $config == $webalizer::params::config {
+		# in MULTI mode, 'webalizer.conf' becomes a "forbidden" name
+			fail( "Webalizer's config file can't be ${config} when in MULTI config mode!!
+			       Please choose a different one or let unassigned so 'webalizer::vhost' picks a suitable name." )
+		}
 	}
+	
+# Once everything's OK, let's go for the real stuff
 # vhost-based webalizer conf file
 	file { $config:
 		ensure  => file,
@@ -97,6 +106,14 @@ define webalizer::vhost (
 		owner   => root,
 		group   => root,
 		content => template('webalizer/webalizer.conf.erb'),
-		require => Class['webalizer'];
+		require => Package['webalizer'];
+	}
+# set per-vhost output dir
+	file { $output:
+		ensure  => directory,
+		mode    => '0755',
+		owner   => 'root',
+		group   => 'root',
+		require => Package['webalizer'];
 	}
 }

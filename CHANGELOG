@@ -1,6 +1,6 @@
-2015-05-09  Jesús M. Navarro <jesus.navarro@undominio.net>
-	* Module refactor so main class manages just webalizer's setup,
-	  while webalizer::vhost def type manages webalizer's config.
+2015-05-10  Jesús M. Navarro <jesus.navarro@undominio.net>
+	* Module refactor so main class manages a single-config webalizer setup,
+	  while webalizer::vhost def type manages multiple webalizer instances.
 
 2015-05-07  Steve Traylen  <steve.traylen@cern.ch>
 	* DNSCache and DNSChildren options are no longer added
