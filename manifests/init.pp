@@ -9,6 +9,11 @@
 #   Default is *false*: the module will delete the default `webalizer.conf`
 #   and will create as many conf files as times the webalizer::config defined typed is called.
 #
+# [*config*]
+#   The single webalizer's config file to be created.  Defaults to:
+#   * '/etc/webalizer/webalizer.conf' on Debian.
+#   * '/etc/webalizer.conf' on other systems.
+#
 # [*puppet_apache*]
 #   Should the puppet module create an apache config snippet; default is *false*.
 #
@@ -50,16 +55,16 @@
 class webalizer (
 # Class-level params
 	$singleconfig    = $webalizer::params::singleconfig,
+	$config          = $webalizer::params::config,
 	# apache-related
 	$puppet_apache   = $webalizer::params::puppet_apache,
 	$apache_conffile = $webalizer::params::apache_conffile,
 	$apache_alias    = $webalizer::params::apache_alias,
 	$allow           = $webalizer::params::allow,
 # webalizer-related config
-	$config    = $webalizer::params::config,
 	$logfile   = $webalizer::params::logfile,
 	$logtype   = $webalizer::params::logtype,
-	$outputdir = $webalizer::params::output,
+	$outputdir = $webalizer::params::outputdir,
   $historyname = $webalizer::params::historyname,
   $incremental = $webalizer::params::incremental,
   $incrementalname = $webalizer::params::incrementalname,

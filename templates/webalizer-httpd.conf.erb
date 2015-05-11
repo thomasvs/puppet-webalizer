@@ -1,8 +1,8 @@
 # This file is under puppet management; do not edit in-place.
 #
 # Config snippet for the webalizer service
-Alias <%= @apache_alias %> <%= @output %>
-<Directory <%= @output %>>
+Alias <%= @apache_alias %> <%= @outputdir %>
+<Directory <%= @outputdir %>>
 	Options None
 	AllowOverride None
 	Order allow,deny

@@ -5,7 +5,7 @@ define webalizer::config (
 	$hostname  = $title,
 	$config    = "${webalizer::params::base_config}/${title}.conf",
 	$logfile   = "${webalizer::params::base_log}/${title}.access.log",
-	$outputdir = "${webalizer::params::output}/${title}",
+	$outputdir = "${webalizer::params::outputdir}/${title}",
 	
 # then, all the other params
   $logtype = $webalizer::params::logtype,
@@ -98,7 +98,7 @@ define webalizer::config (
 	
 # Once everything's OK, let's go for the real stuff
 # vhost-based webalizer conf file
-	file { $webalizer::params::config:
+	file { $config:
 		ensure  => file,
 		mode    => '0644',
 		owner   => root,
