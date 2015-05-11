@@ -98,7 +98,7 @@ define webalizer::config (
 	
 # Once everything's OK, let's go for the real stuff
 # vhost-based webalizer conf file
-	file { $config:
+	file { $webalizer::params::config:
 		ensure  => file,
 		mode    => '0644',
 		owner   => root,
@@ -107,7 +107,7 @@ define webalizer::config (
 		require => Package['webalizer'];
 	}
 # set per-vhost output dir
-	file { $output:
+	file { $outputdir:
 		ensure  => directory,
 		mode    => '0755',
 		owner   => 'root',
