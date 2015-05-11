@@ -4,24 +4,23 @@
 #
 # === Parameters
 #
-# Document parameters here.
-#
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-# === Variables
-#
-# [*version*]
-#   Specify a version of the webalizer package to install. Default is *present*
-#
-# [*config*]
-#   Defaults to /etc/webalizer.conf on RedHat family and /etc/webalizer/webalizer.conf
-#   on Debian
+# [*singleconfig*]
+#   Should the module create just a single webalizer.conf file or multiple files.
+#   Default is *false*: the module will delete the default `webalizer.conf`
+#   and will create as many conf files as times the webalizer::config defined typed is called.
 #
 # [*puppet_apache*]
-#   Should the puppet module create a /etc/httpd/conf.d/webalizer.conf, default is
-#   *true*
+#   Should the puppet module create an apache config snippet; default is *false*.
+#
+# [*apache_conffile*]
+#   Name and path for the apache config snippet.  Defaults to:
+#   * '/etc/webalizer/apache.config' on Debian.
+#   * '/etc/httpd/conf.d/webalizer.conf' on other systems.
+#
+# [*apache_alias*]
+#   Apache alias the output directory will be known as.  Defaults to:
+#   * '/webalizer' on Debian.
+#   * '/usage' on other systems.
 #
 # [*allow*]
 #   Specify who is permitted to access the /usage URL, default is from 'from 127.0.0.1' only.
@@ -30,7 +29,7 @@
 # [*logfile*, *logtype*, *historyname*, ...]
 #   There are around 70 configuration options that set values in /etc/webalizer.conf.
 #   These values come direct from the man page for webalizer.conf. Note that some
-#   values are strings where as some are arrays. Check the defaults in params.pp
+#   values are strings while some others are arrays. Check the defaults in params.pp
 # === Examples
 #
 #  class { webalizer:
@@ -41,27 +40,28 @@
 #
 # === Authors
 #
-# Steve Traylen <steve.traylen@cern.ch>
+# Steve Traylen <steve.traylen@cern.ch> for the original development.
+# Jesus M. Navarro <jesus.navarro@undominio.net> for further evolution.
 #
-# === Copyright
+# === License
 #
-# Copyright 2013 Steve Traylen, CERN
+# This software is distributed under the terms of the Apache License, version 2.0
 #
 class webalizer (
 # Class-level params
 	$singleconfig    = $webalizer::params::singleconfig,
+	# apache-related
 	$puppet_apache   = $webalizer::params::puppet_apache,
 	$apache_conffile = $webalizer::params::apache_conffile,
 	$apache_alias    = $webalizer::params::apache_alias,
 	$allow           = $webalizer::params::allow,
 # webalizer-related config
-	$config  = $webalizer::params::config,
-	$logfile = $webalizer::params::logfile,
-	$logtype = $webalizer::params::logtype,
-	$output  = $webalizer::params::output,
+	$config    = $webalizer::params::config,
+	$logfile   = $webalizer::params::logfile,
+	$logtype   = $webalizer::params::logtype,
+	$outputdir = $webalizer::params::output,
   $historyname = $webalizer::params::historyname,
   $incremental = $webalizer::params::incremental,
-  $clf = $webalizer::params::clf,
   $incrementalname = $webalizer::params::incrementalname,
   $reporttitle = $webalizer::params::reporttitle,
   $hostname = $webalizer::params::hostname,
@@ -167,12 +167,11 @@ class webalizer (
 			hostname        => $hostname,
 			config          => $config,
 			logfile         => $logfile,
-			output          => $output,
+			outputdir       => $outputdir,
 			allow           => $allow,
 			logtype         => $logtype,
 			historyname     => $historyname,
 			incremental     => $incremental,
-			clf             => $clf,
 			incrementalname => $incrementalname,
 			reporttitle     => $reporttitle,
 			htmlextenstion  => $htmlextenstion,

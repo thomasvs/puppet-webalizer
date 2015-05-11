@@ -54,7 +54,7 @@ class webalizer::params {
 	}
   $logtype = 'clf'
   
-  $output  = $::osfamily ? {
+  $outputdir  = $::osfamily ? {
     'Debian' => '/var/www/webalizer',
     default  => '/var/www/usage'
   }

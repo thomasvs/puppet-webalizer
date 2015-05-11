@@ -2,16 +2,15 @@
 # Configures a webalizer's conf file and output directory aimed at a specific virtual host
 define webalizer::config (
 # non-default/customized params go first
-	$hostname = $title,
-	$config   = "${webalizer::params::base_config}/${title}.conf",
-	$logfile  = "${webalizer::params::base_log}/${title}.access.log",
-	$output   = "${webalizer::params::output}/${title}",
+	$hostname  = $title,
+	$config    = "${webalizer::params::base_config}/${title}.conf",
+	$logfile   = "${webalizer::params::base_log}/${title}.access.log",
+	$outputdir = "${webalizer::params::output}/${title}",
 	
 # then, all the other params
   $logtype = $webalizer::params::logtype,
   $historyname = $webalizer::params::historyname,
   $incremental = $webalizer::params::incremental,
-  $clf = $webalizer::params::clf,
   $incrementalname = $webalizer::params::incrementalname,
   $reporttitle = $webalizer::params::reporttitle,
   $htmlextenstion  = $webalizer::params::htmlextenstion,
