@@ -4,7 +4,7 @@ class webalizer::params {
 	# the webalizer conf file can be built either right from the webalizer class,
 	# in which case a single webalizer.conf file exists,
 	# or multiple config files will be built (the default),
-	# in which case some params need to be adjusted accordingly (see webalizer::vhost)
+	# in which case some params need to be adjusted accordingly (see webalizer::config)
 	# and webalizer.conf should NOT exist.
 	$singleconfig = false
 	# location of default webalizer configuration file.

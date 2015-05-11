@@ -1,6 +1,7 @@
 2015-05-11  Jesús M. Navarro <jesus.navarro@undominio.net>
 	* Module refactor so main class manages a single-config webalizer setup,
-	  while webalizer::vhost def type manages multiple webalizer instances.
+	  while webalizer::config def type manages multiple webalizer instances.
+	* webalizer::vhost gets renamed webalizer::config (since the webalizer::config class is used no more).
 	* Documentation updated.
 
 2015-05-07  Steve Traylen  <steve.traylen@cern.ch>

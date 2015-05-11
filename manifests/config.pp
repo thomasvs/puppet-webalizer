@@ -1,116 +1,118 @@
-#Class: webalizer::config
-#confgures webalizer.conf and cron job using
-#parameters from init (defaults params.pp)
-class webalizer::config (
-  $config = $webalizer::params::config,
-  $puppet_apache = $webalizer::params::puppet_apache,
-  $apache_conffile = $webalizer::params::apache_conffile,
-  $cronfile = $webalizer::params::cronfile
-) inherits webalizer {
-
-# Moved to the init class
-# 	if $puppet_apache {
-# 		file{ $apache_conffile:
-# 			ensure  => file,
-# 			owner   => root,
-# 			group   => root,
-# 			mode    => '0644',
-# 			content => template('webalizer/webalizer-httpd.conf.erb')
-# 		}
-# 	}
-# The creation of the webalizer config file has been moved to the webalizer::vhost defined type.
-# 	if $default_config {
-# 	# it gets all its params from the parent class
-# 		webalizer::vhost { 'default':
-# 			hostname        => $hostname,
-# 			config          => $config,
-# 			logfile         => $logfile,
-# 			output          => $output,
-# 			allow           => $allow,
-# 			logtype         => $logtype,
-# 			historyname     => $historyname,
-# 			incremental     => $incremental,
-# 			clf             => $clf,
-# 			incrementalname => $incrementalname,
-# 			reporttitle     => $reporttitle,
-# 			htmlextenstion  => $htmlextenstion,
-# 			pagetype        => $pagetype,
-# 			usehttps        => $usehttps,
-# 			dnscache        => $dnscache,
-# 			dnschildren     => $dnschildren,
-# 			htmlpre         => $htmlpre,
-# 			htmlhead        => $htmlhead,
-# 			htmlbody        => $htmlbody,
-# 			htmlpost        => $htmlpost,
-# 			htmltail        => $htmltail,
-# 			htmlend         => $htmlend ,
-# 			quiet           => $quiet   ,
-# 			reallyquiet     => $reallyquiet   ,
-# 			timeme          => $timeme,
-# 			gmttime         => $gmttime,
-# 			debug           => $debug,
-# 			foldseqerr      => $foldseqerr,
-# 			visittimeout    => $visittimeout,
-# 			ignorehist      => $ignorehist,
-# 			countrygraph    => $countrygraph,
-# 			dailygraph      => $dailygraph,
-# 			dailystats      => $dailystats,
-# 			hourlygraph     => $hourlygraph,
-# 			hourlystats     => $hourlystats,
-# 			graphlegend     => $graphlegend,
-# 			graphlines      => $graphlines,
-# 			topsites        => $topsites,
-# 			topksites       => $topksites,
-# 			topurls         => $topurls  ,
-# 			topkurls        => $topkurls ,
-# 			topreferrers    => $topreferrers,
-# 			topagents       => $topagents,
-# 			topcountries    => $topcountries,
-# 			topentry        => $topentry,
-# 			topexit         => $topexit,
-# 			topsearch       => $topsearch,
-# 			topusers        => $topusers,
-# 			allsites        => $allsites,
-# 			allurls         => $allurls,
-# 			allreferrers    => $allreferrers,
-# 			allagents       => $allagents,
-# 			allsearchstr    => $allsearchstr,
-# 			allusers        => $allusers,
-# 			indexalias      => $indexalias,
-# 			hidesite        => $hidesite,
-# 			hidereferrer    => $hidereferrer,
-# 			hideurl         => $hideurl,
-# 			hideagent       => $hideagent,
-# 			hideuser        => $hideuser,
-# 			groupurl        => $groupurl,
-# 			groupsite       => $groupsite,
-# 			groupreferrer   => $groupreferrer,
-# 			groupuser       => $groupuser,
-# 			hideallsites    => $hideallsites,
-# 			groupdomains    => $groupdomains,
-# 			groupshading    => $groupshading,
-# 			grouphighlight  => $grouphighlight,
-# 			ignoresite      => $ignoresite,
-# 			ignoreurl       => $ignoreurl,
-# 			ignorereferrer  => $ignorereferrer,
-# 			ignoreagent     => $ignoreagent,
-# 			ignoreuser      => $ignoreuser,
-# 			mangleagents    => $mangleagents,
-# 			searchagents    => $webalizer::params::searchagents		}
-# 	} else {
-# 		file { $webalizer::params::config: ensure => absent }
-# 	}
+# Define ::webalizer::config
+# Configures a webalizer's conf file and output directory aimed at a specific virtual host
+define webalizer::config (
+# non-default/customized params go first
+	$hostname = $title,
+	$config   = "${webalizer::params::base_config}/${title}.conf",
+	$logfile  = "${webalizer::params::base_log}/${title}.access.log",
+	$output   = "${webalizer::params::output}/${title}",
 	
-# Moved to the init class
-#   #Kill the rpm provided cron job.
-#   if $cronfile {
-#     file{$cronfile:
-#       ensure  => file,
-#       mode    => '0755',
-#       owner   => root,
-#       group   => root,
-#       content => template('webalizer/webalizer.cron.erb'),
-#       require => Package['webalizer']
-#     }
-#   }
+# then, all the other params
+  $logtype = $webalizer::params::logtype,
+  $historyname = $webalizer::params::historyname,
+  $incremental = $webalizer::params::incremental,
+  $clf = $webalizer::params::clf,
+  $incrementalname = $webalizer::params::incrementalname,
+  $reporttitle = $webalizer::params::reporttitle,
+  $htmlextenstion  = $webalizer::params::htmlextenstion,
+  $pagetype  = $webalizer::params::pagetype,
+  $usehttps  = $webalizer::params::usehttps,
+  $dnscache  = $webalizer::params::dnscache,
+  $dnschildren  = $webalizer::params::dnschildren,
+  $htmlpre  = $webalizer::params::htmlpre,
+  $htmlhead = $webalizer::params::htmlhead,
+  $htmlbody = $webalizer::params::htmlbody,
+  $htmlpost = $webalizer::params::htmlpost,
+  $htmltail = $webalizer::params::htmltail,
+  $htmlend   = $webalizer::params::htmlend ,
+  $quiet     = $webalizer::params::quiet   ,
+  $reallyquiet     = $webalizer::params::reallyquiet   ,
+  $timeme  = $webalizer::params::timeme,
+  $gmttime  = $webalizer::params::gmttime,
+  $debug  = $webalizer::params::debug,
+  $foldseqerr  = $webalizer::params::foldseqerr,
+  $visittimeout  = $webalizer::params::visittimeout,
+  $ignorehist  = $webalizer::params::ignorehist,
+  $countrygraph  = $webalizer::params::countrygraph,
+  $dailygraph  = $webalizer::params::dailygraph,
+  $dailystats  = $webalizer::params::dailystats,
+  $hourlygraph  = $webalizer::params::hourlygraph,
+  $hourlystats  = $webalizer::params::hourlystats,
+  $graphlegend  = $webalizer::params::graphlegend,
+  $graphlines  = $webalizer::params::graphlines,
+  $topsites  = $webalizer::params::topsites,
+  $topksites  = $webalizer::params::topksites,
+  $topurls    = $webalizer::params::topurls  ,
+  $topkurls   = $webalizer::params::topkurls ,
+  $topreferrers  = $webalizer::params::topreferrers,
+  $topagents  = $webalizer::params::topagents,
+  $topcountries  = $webalizer::params::topcountries,
+  $topentry  = $webalizer::params::topentry,
+  $topexit  = $webalizer::params::topexit,
+  $topsearch  = $webalizer::params::topsearch,
+  $topusers  = $webalizer::params::topusers,
+  $allsites  = $webalizer::params::allsites,
+  $allurls  = $webalizer::params::allurls,
+  $allreferrers  = $webalizer::params::allreferrers,
+  $allagents  = $webalizer::params::allagents,
+  $allsearchstr  = $webalizer::params::allsearchstr,
+  $allusers  = $webalizer::params::allusers,
+  $indexalias  = $webalizer::params::indexalias,
+  $hidesite  = $webalizer::params::hidesite,
+  $hidereferrer  = $webalizer::params::hidereferrer,
+  $hideurl  = $webalizer::params::hideurl,
+  $hideagent  = $webalizer::params::hideagent,
+  $hideuser  = $webalizer::params::hideuser,
+  $groupurl  = $webalizer::params::groupurl,
+  $groupsite  = $webalizer::params::groupsite,
+  $groupreferrer  = $webalizer::params::groupreferrer,
+  $groupuser  = $webalizer::params::groupuser,
+  $hideallsites  = $webalizer::params::hideallsites,
+  $groupdomains  = $webalizer::params::groupdomains,
+  $groupshading   = $webalizer::params::groupshading,
+  $grouphighlight  = $webalizer::params::grouphighlight,
+  $ignoresite  = $webalizer::params::ignoresite,
+  $ignoreurl  = $webalizer::params::ignoreurl,
+  $ignorereferrer  = $webalizer::params::ignorereferrer,
+  $ignoreagent  = $webalizer::params::ignoreagent,
+  $ignoreuser  = $webalizer::params::ignoreuser,
+  $mangleagents  = $webalizer::params::mangleagents,
+  $searchagents = $webalizer::params::searchagents
+) {
+# A bit of error checking first:
+# we are either called from our parent class (single config) or from a different class (multiple configs)
+	if $::webalizer::singleconfig {
+		if $caller_module_name != 'webalizer' {
+			fail( "Processing SINGLE config, but you explicitly called the 'webalizer::config' defined type.
+			       You should pass parameters to the webalizer class instead!!" )
+		}
+	} else {
+		if caller_module_name == 'webalizer' {
+			fail( "Processing MULTI config but called from webalizer.
+			       Please, call the 'webalizer::config' defined type instead!!" )
+		} elsif $config == $webalizer::params::config {
+		# in MULTI mode, 'webalizer.conf' becomes a "forbidden" name
+			fail( "Webalizer's config file can't be ${config} when in MULTI config mode!!
+			       Please choose a different one or let unassigned so 'webalizer::config' picks a suitable name." )
+		}
+	}
+	
+# Once everything's OK, let's go for the real stuff
+# vhost-based webalizer conf file
+	file { $config:
+		ensure  => file,
+		mode    => '0644',
+		owner   => root,
+		group   => root,
+		content => template('webalizer/webalizer.conf.erb'),
+		require => Package['webalizer'];
+	}
+# set per-vhost output dir
+	file { $output:
+		ensure  => directory,
+		mode    => '0755',
+		owner   => 'root',
+		group   => 'root',
+		require => Package['webalizer'];
+	}
 }

@@ -163,7 +163,7 @@ class webalizer (
 	if $singleconfig {
 	# we reuse our defined type for this.
 	# Bad luck we can't avoid repeating these many params
-		webalizer::vhost { 'default':
+		webalizer::config { 'default':
 			hostname        => $hostname,
 			config          => $config,
 			logfile         => $logfile,

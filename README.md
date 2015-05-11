@@ -33,9 +33,9 @@ This module has been tested on Debian *"wheezy"*.
 ## Usage
 There are two *"main modes"* of usage, depending if you want to create just one or more than one webalizer configuration files (i.e. to produce stats for multiple virtual hosts).
 
-On top of that, both the `webalizer` class and the `webalizer::vhost` defined type basically accept as many params as the webalizer program makes available.
+On top of that, both the `webalizer` class and the `webalizer::config` defined type basically accept as many params as the webalizer program makes available.
 
-For default values see `webalizer::params` and either `webalizer` or `webalizer::vhost` respectively.
+For default values see `webalizer::params` and either `webalizer` or `webalizer::config` respectively.
 
 ### Single configuration file
 If you just need to produce output stats for a single web site, you need to declare `webalizer` as a parametrized class and let it produce a single `webalizer.conf` file.
@@ -51,14 +51,14 @@ class { 'webalizer':
 ```
 
 ### Multiple configuration files
-If you want to produce stats for different web sites, you should use the `webalizer::vhost` defined type to produce multiple webalizer config files.  In that case, you can **not** call the `webalizer` class with the *singleconfig* parameter set to *true*.  
+If you want to produce stats for different web sites, you should use the `webalizer::config` defined type to produce multiple webalizer config files.  In that case, you can **not** call the `webalizer` class with the *singleconfig* parameter set to *true*.  
 An example follows:
 ```puppet
 class { 'webalizer':
 	puppet_apache => true,
 	allow         => 'from localhost 127.0.0.0/8 ::1 192.168.1.0/24',
 }
-webalizer::vhost { ['site1', 'site2']:
+webalizer::config { ['site1', 'site2']:
 	htmlhead => ['<meta http-equiv="content-type" content="text/html; charset=UTF-8">',
 	             '<META NAME="author" CONTENT="The Webalizer">'],
 	htmltail => '';
@@ -67,7 +67,7 @@ webalizer::vhost { ['site1', 'site2']:
 
 First we declare the `webalizer` class and tell it to create an apache snippet.  Note that, since this invocation won't create a `webalizer.conf` file and, in fact, **it will delete the `webalizer.conf` file at its default location**, webalizer-related params will be ignored.  
 An alternate invocation if default params are OK, would be just `include webalizer`.  
-Then we declare the `webalizer::vhost` defined type, which tries to set sensible defaults out of the defined type instance's *$title*:
+Then we declare the `webalizer::config` defined type, which tries to set sensible defaults out of the defined type instance's *$title*:
 * On Debian (and derivatives):
 	* Output config file: `/etc/webalizer/${title}.conf`
 	* Log file to process: `/var/log/apache2/${title}.access.log`
@@ -93,7 +93,7 @@ In case of problems on other distributions, patches are welcome.
 You probably want webalizer's stats to be published by your local web server but current support for this is very basic:
 * You can set webalizer's `$puppet_apache` boolean class variable to *true*.  This will create an apache config snippet either at `/etc/webalizer/apache.config` (on debian) or `/etc/httpd/conf.d/webalizer.conf` (on other systems).  
 It is up to you what to do with it in order for Apache to read it and publish webalizer's contents.
-* The `webalizer::vhost` defined type, offers no support for the `$puppet_apache` boolean, so it's up to you how to publish webalizer's stats when more than one site is process.
+* The `webalizer::config` defined type, offers no support for the `$puppet_apache` boolean, so it's up to you how to publish webalizer's stats when more than one site is process.
 
 ## License
 Apache 2.0
