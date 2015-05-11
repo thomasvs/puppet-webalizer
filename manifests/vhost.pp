@@ -8,7 +8,6 @@ define webalizer::vhost (
 	$output   = "${webalizer::params::output}/${title}",
 	
 # then, all the other params
-  $allow = $webalizer::params::allow,
   $logtype = $webalizer::params::logtype,
   $historyname = $webalizer::params::historyname,
   $incremental = $webalizer::params::incremental,

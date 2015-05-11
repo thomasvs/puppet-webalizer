@@ -49,9 +49,11 @@
 #
 class webalizer (
 # Class-level params
-	$singleconfig = $webalizer::params::singleconfig,
-  $puppet_apache = $webalizer::params::puppet_apache,
-  $allow = $webalizer::params::allow,
+	$singleconfig    = $webalizer::params::singleconfig,
+	$puppet_apache   = $webalizer::params::puppet_apache,
+	$apache_conffile = $webalizer::params::apache_conffile,
+	$apache_alias    = $webalizer::params::apache_alias,
+	$allow           = $webalizer::params::allow,
 # webalizer-related config
 	$config  = $webalizer::params::config,
 	$logfile = $webalizer::params::logfile,
@@ -143,6 +145,17 @@ class webalizer (
 			group   => root,
 			content => template('webalizer/webalizer.cron.erb'),
 			require => Package['webalizer']
+		}
+	}
+	
+# Create an apache config snippet if requested
+	if $puppet_apache {
+		file{ $apache_conffile:
+			ensure  => file,
+			owner   => root,
+			group   => root,
+			mode    => '0644',
+			content => template('webalizer/webalizer-httpd.conf.erb')
 		}
 	}
 	

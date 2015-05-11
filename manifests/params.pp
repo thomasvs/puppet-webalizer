@@ -7,39 +7,35 @@ class webalizer::params {
 	# in which case some params need to be adjusted accordingly (see webalizer::vhost)
 	# and webalizer.conf should NOT exist.
 	$singleconfig = false
-	
-# Generic webalizer config
-	# location of default configuration file.
+	# location of default webalizer configuration file.
 	$base_config = $::osfamily ? {
 		'Debian' => '/etc/webalizer',
-		default => '/etc'
+		default  => '/etc'
 	}
 	$config = "${base_config}/webalizer.conf"
-
-# Apache-related config.
-# NOTE: Pending review for reactivation.
-#
-#   #Should I create a httpd configuration file.
-#   $puppet_apache = true
-# 	# The (virtual) URL for web access
-# 	$apache_alias = $::osfamily ? {
-# 		'Debian' => '/webalizer',
-# 		'RedHat' => '/usage'
-# 	}
-# 	# apache conf file name
-# 	$apache_conffile = $::osfamily ? {
-# 	# on Debian the cron script will treat all *.conf under /etc/webalizer
-# 	# as webalizer.conf files, so I need a different extension for this.
-# 	# On the other hand, Debian's standard is to leave the apache snippet within the main conf dir,
-# 	# then add a symlink to this file wherever required.
-# 		'Debian' => '/etc/webalizer/apache.config',
-# 		'RedHat' => '/etc/httpd/conf.d/webalizer.conf',
-# 	}
-#   # Who is permitted to access the URL.
-#   $allow = 'from 127.0.0.1'
-
-# Cron-related config is only valid for non-debian systems
-	  # If not false, a customized cron file will be built.
+	
+	# Apache-related config.
+	# Should I create a httpd configuration file?
+	$puppet_apache = false
+	# apache conf snippet file name and location
+	$apache_conffile = $::osfamily ? {
+	# on Debian the cron script will treat all *.conf under /etc/webalizer
+	# as webalizer.conf files, so I need a different extension for this.
+	# On the other hand, Debian's standard is to leave the apache snippet within the main conf dir,
+	# then add a symlink to this file wherever required.
+		'Debian' => "${base_config}/apache.config",
+		default  => '/etc/httpd/conf.d/webalizer.conf',
+	}
+	# The (virtual) URL for web access
+	$apache_alias = $::osfamily ? {
+		'Debian' => '/webalizer',
+		default  => '/usage'
+	}
+	# Who is permitted to access the URL.
+	$allow = 'from 127.0.0.1'
+	
+	# Cron-related config is only valid for non-debian systems
+	# If not false, a customized cron file will be built.
 	$cronfile = $::osfamily ? {
 		'Debian' => false,
 		default  => '/etc/cron.daily/00webalizer'

@@ -8,15 +8,16 @@ class webalizer::config (
   $cronfile = $webalizer::params::cronfile
 ) inherits webalizer {
 
-	if $puppet_apache {
-		file{ $apache_conffile:
-			ensure  => file,
-			owner   => root,
-			group   => root,
-			mode    => '0644',
-			content => template('webalizer/webalizer-httpd.conf.erb')
-		}
-	}
+# Moved to the init class
+# 	if $puppet_apache {
+# 		file{ $apache_conffile:
+# 			ensure  => file,
+# 			owner   => root,
+# 			group   => root,
+# 			mode    => '0644',
+# 			content => template('webalizer/webalizer-httpd.conf.erb')
+# 		}
+# 	}
 # The creation of the webalizer config file has been moved to the webalizer::vhost defined type.
 # 	if $default_config {
 # 	# it gets all its params from the parent class
