@@ -1,12 +1,13 @@
-<<<<<<< HEAD
 # global git ignores
 *~
 *.swp
 *.pyc
+# puppet module
 spec/fixtures
 Gemfile.lock
 pkg/
-log/
+# Vagrant-related
 .vagrant
 package.box
-
+# Other
+log/
