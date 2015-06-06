@@ -26,13 +26,22 @@ class webalizer::params {
 		'Debian' => "${base_config}/apache.config",
 		default  => '/etc/httpd/conf.d/webalizer.conf',
 	}
+	# the apache snippet's template to be used and params depending on it
+	# (Debian "Jessie" vs everything else)
+	if ($::osfamily == 'Debian') and (versioncmp($::operatingsystemmajrelease, '8') >= 0) {
+		$apache_template = 'webalizer-httpd.conf.jessie.erb'
+		# who is permitted to access the URL.
+		$allow = 'local'
+	} else {
+		$apache_template = 'webalizer-httpd.conf.erb'
+		# who is permitted to access the URL.
+		$allow = 'from 127.0.0.1'
+	}
 	# The (virtual) URL for web access
 	$apache_alias = $::osfamily ? {
 		'Debian' => '/webalizer',
 		default  => '/usage'
 	}
-	# Who is permitted to access the URL.
-	$allow = 'from 127.0.0.1'
 	
 	# Cron-related config is only valid for non-debian systems
 	# If not false, a customized cron file will be built.

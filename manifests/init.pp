@@ -30,6 +30,12 @@
 # [*allow*]
 #   Specify who is permitted to access the /usage URL, default is from 'from 127.0.0.1' only.
 #   The value ends up in the /etc/httpd/conf.d/webalizer.conf file above.
+#	NOTE: Apache 2.4, in use starting Debian 8 ("Jessie"), came with a new authorization syntax.
+#	On Debian 7 ("Wheezy") 'allow' defaults to 'from 127.0.0.1' only (see template):
+#		Order allow,deny
+#		Allow from 127.0.0.1
+#	On Debian 8 ("Jessie") 'allow' defaults to 'local' (see template):
+#		Require local
 #
 # [*logfile*, *logtype*, *historyname*, ...]
 #   There are around 70 configuration options that set values in /etc/webalizer.conf.
@@ -135,6 +141,9 @@ class webalizer (
   $mangleagents  = $webalizer::params::mangleagents,
   $searchagents = $webalizer::params::searchagents
 ) inherits webalizer::params {
+# local params
+$apache_template = $webalizer::params::apache_template
+
 # Make sure the webalizer package gets installed
 	package { 'webalizer': ensure => present }
 	
@@ -160,7 +169,7 @@ class webalizer (
 			owner   => root,
 			group   => root,
 			mode    => '0644',
-			content => template('webalizer/webalizer-httpd.conf.erb')
+			content => template("webalizer/${apache_template}")
 		}
 	}
 	
