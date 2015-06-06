@@ -17,7 +17,7 @@
 ## Overview
 This module allows puppet to manage/configure a webalizer set-up, providing support for multiple virtual hosts.
 
-It is a fork of CERNOps/webalizer by CERN-Ops.
+It is a fork of [CERNOps/webalizer by CERN-Ops](https://github.com/cernops/puppet-webalizer).
 
 It is also my first attempt to publish a puppet module, so please be patient :)
 
@@ -40,7 +40,7 @@ For default values see `webalizer::params` and either `webalizer` or `webalizer:
 ### Single configuration file
 If you just need to produce output stats for a single web site, you need to declare `webalizer` as a parametrized class and let it produce a single `webalizer.conf` file.
 
-The following is an example for setting up webalizer to process an alternate log file, and then grant *access from all* to the publication tree (but see [Limitations: Apache config](#apache-config) for details about the *'allow' parameter):
+The following is an example for setting up webalizer to process an alternate log file, and then grant *access from all* to the publication tree (but see [Limitations: Apache config](#apache-config) for details about the *'allow'* parameter):
 ```puppet
 class { 'webalizer':
 	singleconfig  => true,
@@ -78,7 +78,7 @@ Then we declare the `webalizer::config` defined type, which tries to set sensibl
 	* Log file to process: `/var/log/httpd/${title}.access.log`
 	* Output directory: `/var/www/usage/${title}`
 
-Of course, you still can overwrite all the avaliable params for a finer tuned result.
+Of course, you still can overwrite all the avaliable params for a finerly tuned result.
 
 ## Limitations
 
@@ -93,7 +93,7 @@ In case of problems on other distributions, patches are welcome.
 You probably want webalizer's stats to be published by your local web server but current support for this is very basic:
 * You can set webalizer's `$puppet_apache` boolean class variable to *true*.  This will create an apache config snippet either at `/etc/webalizer/apache.config` (on debian) or `/etc/httpd/conf.d/webalizer.conf` (on other systems).  
 It is up to you what to do with it in order for Apache to read it and publish webalizer's contents.
-	* There was a auth-related change in apache's syntax on version 2.4 upwards.  While in 2.4 you'd use something like the following snippet to control access to a virtual dir...
+	* There was a auth-related change in apache's syntax on version 2.4 upwards.  While in 2.2 you'd use something like the following snippet to control access to a virtual dir...
 	```apache```
 	Order allow,deny
 	Allow from 127.0.0.1
@@ -103,7 +103,7 @@ It is up to you what to do with it in order for Apache to read it and publish we
 	Require local
 	```  
 	I added logic and a new template to cope with the differences.  For more details see [the relevant Apache docs](http://httpd.apache.org/docs/current/mod/mod_authz_host.html).
-* The `webalizer::config` defined type, offers no support for the `$puppet_apache` boolean, so it's up to you how to publish webalizer's stats when more than one site is process.
+* The `webalizer::config` defined type, offers no support for the `$puppet_apache` boolean, so it's up to you how to publish webalizer's stats when more than one site is processed.
 
 ## License
 Apache 2.0

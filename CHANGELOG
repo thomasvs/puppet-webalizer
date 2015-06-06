@@ -1,3 +1,6 @@
+2015-06-06  Jesús M. Navarro <jesus.navarro@undominio.net>
+	* Added support for Debian "jessie".
+
 2015-05-11  Jesús M. Navarro <jesus.navarro@undominio.net>
 	* Module refactor so main class manages a single-config webalizer setup,
 	  while webalizer::config def type manages multiple webalizer instances.

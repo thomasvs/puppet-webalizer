@@ -1,6 +1,6 @@
 {
 	"name": "jmnav-webalizer",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"author": "Jesús M. Navarro",
 	"summary": "Configure webalizer",
 	"description": "Installs and configures webalizer, with support for multiple virtual hosts.",
