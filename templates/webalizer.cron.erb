@@ -6,3 +6,6 @@ if [ -r <%= @logfile %> ] ; then
   /usr/bin/webalizer -Q
 fi
 
+for CONFIG in /etc/webalizer/*.conf; do
+  /usr/bin/webalizer -c ${CONFIG}
+done
