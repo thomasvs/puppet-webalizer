@@ -10,6 +10,7 @@ class webalizer::params {
 	# location of default webalizer configuration file.
 	$base_config = $::osfamily ? {
 		'Debian' => '/etc/webalizer',
+		'RedHat' => '/etc/webalizer',
 		default  => '/etc'
 	}
 	$config = "${base_config}/webalizer.conf"

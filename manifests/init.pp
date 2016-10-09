@@ -150,6 +150,12 @@ $apache_template = $webalizer::params::apache_template
 # Some input validation
 	validate_string($allow)
 	
+# Create base_config if necessary
+  if $webalizer::params::base_config != '/etc' {
+    file { $webalizer::params::base_config:
+      ensure => directory
+    }
+  }
 # On non-debian systems (see params), kill the rpm-provided cron job and use ours instead
 	if $webalizer::params::cronfile {
 		file{ $webalizer::params::cronfile:
