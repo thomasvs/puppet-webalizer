@@ -76,7 +76,8 @@ define webalizer::config (
   $ignoreagent  = $webalizer::params::ignoreagent,
   $ignoreuser  = $webalizer::params::ignoreuser,
   $mangleagents  = $webalizer::params::mangleagents,
-  $searchagents = $webalizer::params::searchagents
+  $searchagents = $webalizer::params::searchagents,
+  $ensure = 'present',
 ) {
 # A bit of error checking first:
 # we are either called from our parent class (single config) or from a different class (multiple configs)
@@ -99,16 +100,16 @@ define webalizer::config (
 # Once everything's OK, let's go for the real stuff
 # vhost-based webalizer conf file
 	file { $config:
-		ensure  => file,
-		mode    => '0644',
-		owner   => root,
-		group   => root,
-		content => template('webalizer/webalizer.conf.erb'),
-		require => Package['webalizer'];
+    ensure  => $ensure ? { 'absent' => 'absent', default => file},
+    mode    => '0644',
+    owner   => root,
+    group   => root,
+    content => template('webalizer/webalizer.conf.erb'),
+    require => Package['webalizer'];
 	}
 # set per-vhost output dir
 	file { $outputdir:
-		ensure  => directory,
+    ensure  => $ensure ? { 'absent' => 'absent', default => directory},
 		mode    => '0755',
 		owner   => 'root',
 		group   => 'root',
